@@ -1,7 +1,7 @@
 ---
 name: new-project
 description: |
-  Bootstrap a new project for Claude Code. Wires up code-review-graph MCP, creates a project-level CLAUDE.md with subagents and preferred-tools blocks, and builds the knowledge graph.
+  Bootstrap a new project for Claude Code. Wires up code-review-graph MCP, creates a lean project-level CLAUDE.md with graph tool table, and builds the knowledge graph.
   
   Invoke when: user runs /new-project, says "set up Claude Code for this repo", "initialize this project", "I'm starting on a new codebase", or asks to configure MCP tools for a project. Trigger proactively after git init or when working in a repo with no CLAUDE.md and no .mcp.json.
 allowed-tools:
