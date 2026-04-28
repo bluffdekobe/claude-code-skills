@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuditReport",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "repo_root", "branch", "summary", "issues"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "repo_root": { "type": "string" },
+    "branch": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "required": ["P0", "P1", "P2", "P3", "fixed", "open"],
+      "properties": {
+        "P0": { "type": "integer", "minimum": 0 },
+        "P1": { "type": "integer", "minimum": 0 },
+        "P2": { "type": "integer", "minimum": 0 },
+        "P3": { "type": "integer", "minimum": 0 },
+        "fixed": { "type": "integer", "minimum": 0 },
+        "open": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "area", "file", "category", "title", "root_cause", "proposed_fix", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AUD-[0-9]{4}$" },
+          "severity": { "enum": ["P0", "P1", "P2", "P3"] },
+          "area": { "enum": ["frontend", "backend", "api", "worker", "security", "infra", "db", "ux"] },
+          "file": { "type": "string" },
+          "line": { "type": ["integer", "null"] },
+          "category": { "enum": ["bug", "perf", "security", "a11y", "dx", "reliability", "cost"] },
+          "title": { "type": "string" },
+          "root_cause": { "type": "string" },
+          "proposed_fix": { "type": "string" },
+          "status": { "enum": ["open", "fixed", "wontfix"] },
+          "fix_hint_files": { "type": "array", "items": { "type": "string" } },
+          "tests_to_add": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
