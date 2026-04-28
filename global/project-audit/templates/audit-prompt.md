@@ -58,35 +58,7 @@ Security:
 
 ## Issue Ledger JSON Schema (REQUIRED)
 
-`{{OUTPUT_DIR}}/audit-report.json`:
-
-```json
-{
-  "schema_version": "1.0",
-  "generated_at": "ISO-8601",
-  "repo_root": "{{REPO_ROOT}}",
-  "branch": "{{BRANCH}}",
-  "summary": { "P0": 0, "P1": 0, "P2": 0, "P3": 0, "fixed": 0, "open": 0 },
-  "issues": [
-    {
-      "id": "AUD-0001",
-      "severity": "P0",
-      "area": "backend",
-      "file": "app/api/foo/route.ts",
-      "line": 42,
-      "category": "security",
-      "title": "Missing auth check on resource fetch",
-      "root_cause": "...",
-      "proposed_fix": "...",
-      "status": "open",
-      "fix_hint_files": ["app/api/foo/route.ts"],
-      "tests_to_add": ["app/api/foo/route.test.ts"]
-    }
-  ]
-}
-```
-
-Every issue MUST include all fields. Stable `id`s (AUD-0001, AUD-0002, ...) so a follow-up fix crew can resume + skip already-fixed.
+`{{OUTPUT_DIR}}/audit-report.json` — schema: `templates/issue-schema.json`. Every issue MUST include all required fields. Stable `id`s (AUD-0001, AUD-0002, ...) so a follow-up fix crew can resume + skip already-fixed.
 
 ## Constraints
 - No backwards-incompatible DB migrations without written rollback plan.

@@ -46,47 +46,20 @@ If no CLAUDE.md exists, create one at the project root with this content (replac
 
 <!-- List the main technologies: language, framework, database, etc. Fill this in. -->
 
-## Subagents
+## Codebase Exploration
 
-Spawn subagents to isolate context, parallelize independent work, or offload bulk mechanical tasks. Don't spawn when the parent needs the reasoning or when synthesis must stay in one place.
+Use `code-review-graph` MCP tools BEFORE Grep/Glob/Read.
 
-Pick the cheapest model that can do the subtask:
-- **Haiku**: bulk mechanical work, no judgment needed
-- **Sonnet**: scoped research, code exploration, in-scope synthesis
-- **Opus**: subtasks needing real planning or tradeoffs
-
-Each subagent must receive: the goal, the *why*, success criteria, and the exact output format required. Verify returned data before using it in the parent. If a subagent needs a higher tier than itself, it returns to the parent — it does not silently proceed.
-
-Parent owns final output and cross-spawn synthesis. User instructions override.
-
-## Preferred Tools
-
-### Codebase Exploration
-
-Use `code-review-graph` MCP tools BEFORE Grep/Glob/Read for any codebase question. The graph provides structural context (callers, dependents, test coverage) with far fewer tokens. Fall back to Grep/Glob/Read only when the graph doesn't cover what you need.
-
-Key tools:
-- `semantic_search_nodes` — find functions/classes by name or keyword
-- `get_impact_radius` — blast radius of a change
-- `query_graph` — trace callers, callees, imports, tests
-- `detect_changes` — risk-scored analysis of recent changes
-- `get_architecture_overview` — high-level structure
-
-### Data Fetching
-
-1. **WebFetch**: free, text-only, public pages.
-2. **agent-browser CLI**: dynamic pages, auth walls, JS-rendered content. ~82% fewer tokens than screenshot tools. Use `snapshot` for DOM state.
-
-### PDF Files
-
-Use `pdftotext "$FILE" -` instead of the `Read` tool. `Read` loads PDFs as images.
-
-## Dedicated Tools
-
-<!-- Project-specific CLI wrappers, scripts, or skills go here. Example:
-- [fetch_stripe_events](tools/fetch_stripe.py) — fetch and filter Stripe webhook events
-- rtk — token-optimized git/bash proxy; use instead of raw git/bash commands
--->
+| Tool | Use when |
+|------|----------|
+| `semantic_search_nodes` | Find functions/classes by name |
+| `detect_changes` | Risk-scored review of recent changes |
+| `get_review_context` | Token-efficient source snippets |
+| `get_impact_radius` | Blast radius of a change |
+| `get_affected_flows` | Impacted execution paths |
+| `query_graph` | Callers, callees, imports, tests |
+| `get_architecture_overview` | High-level structure |
+| `refactor_tool` | Renames, dead code |
 ```
 
 ### 4. Wire up code-review-graph MCP
