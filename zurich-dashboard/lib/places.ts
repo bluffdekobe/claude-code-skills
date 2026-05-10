@@ -37,15 +37,16 @@ export async function searchPlaces(
           radius: 8000,
         },
       },
-      maxResultCount: 20,
+      pageSize: 20,
     }),
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Places API error (${res.status}): ${err}`);
+    const detail = data?.error?.message ?? JSON.stringify(data);
+    throw new Error(`Places API ${res.status}: ${detail}`);
   }
 
-  const data = await res.json();
   return (data.places ?? []) as RawPlace[];
 }

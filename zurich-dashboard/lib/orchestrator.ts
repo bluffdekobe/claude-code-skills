@@ -138,10 +138,12 @@ Instructions:
           try {
             places = await searchPlaces(query, googleApiKey);
           } catch (err) {
+            const msg = String(err);
+            onStatus(`⚠ Places API error for "${query}": ${msg}`);
             toolResults.push({
               type: "tool_result",
               tool_use_id: block.id,
-              content: `Error: ${String(err)}`,
+              content: `Error: ${msg}`,
             });
             continue;
           }
